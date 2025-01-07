@@ -12,12 +12,13 @@
     <p>Carregando resultados...</p>
   </div>
 
-  <script>
-    // URL da API (troque pela sua URL real)
-    const apiUrl = 'https://api-rest-production-ec61.up.railway.app/results';
+  <!-- Referência ao arquivo de configuração -->
+  <script src="config.js"></script>
 
-    // Busca os dados da API
-    fetch(apiUrl)
+  <!-- Código principal -->
+  <script>
+    // Usa a URL da API definida no config.js
+    fetch(API_URL)
       .then(response => {
         if (!response.ok) {
           throw new Error(`Erro na API: ${response.statusText}`);
