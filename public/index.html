@@ -12,50 +12,6 @@
     <p>Carregando resultados...</p>
   </div>
 
-  <!-- Código principal -->
-  <script>
-    // URL da API
-    const API_URL = 'https://api-rest-production-ec61.up.railway.app/results';
-
-    // Usa a URL da API definida
-    fetch(API_URL)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Erro na API: ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = ''; // Limpa mensagem de carregamento
-
-        // Verifica se há dados
-        if (data.length === 0) {
-          resultsDiv.innerHTML = '<p>Nenhum resultado encontrado.</p>';
-          return;
-        }
-
-        // Itera sobre os resultados e os exibe
-        data.forEach(item => {
-          const card = document.createElement('div');
-          card.classList.add('result-card');
-          card.innerHTML = `
-            <div class="result-header">
-              <span>${item.Titulo}</span>
-              <span>${item.Hora}</span>
-            </div>
-            <div class="result-details">
-              <strong>Prêmios:</strong> ${item.Resultados.map(r => r.Resultado).join(', ')}
-            </div>
-          `;
-          resultsDiv.appendChild(card);
-        });
-      })
-      .catch(error => {
-        console.error('Erro ao carregar resultados:', error);
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = `<p>Erro ao carregar os resultados. Tente novamente mais tarde.</p>`;
-      });
-  </script>
+<script src="script.js"></script>
 </body>
 </html>
