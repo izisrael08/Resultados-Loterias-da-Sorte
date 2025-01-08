@@ -12,12 +12,12 @@
     <p>Carregando resultados...</p>
   </div>
 
-  <!-- Referência ao arquivo de configuração -->
-  <!-- <script src="config.js"></script> -->
-
   <!-- Código principal -->
   <script>
-    // Usa a URL da API definida no config.js
+    // URL da API
+    const API_URL = 'https://api-rest-production-ec61.up.railway.app/results';
+
+    // Usa a URL da API definida
     fetch(API_URL)
       .then(response => {
         if (!response.ok) {
