@@ -1,11 +1,13 @@
-const API_URL = 'https://resultados-loterias-da-sorte-production.up.railway.app/results'; // URL completa do endpoint
+// Define a URL para o endpoint do servidor que retorna os resultados
+const API_URL = '/get-results'; // Faz a requisição para o servidor backend
 
+// Realiza a requisição para o servidor
 fetch(API_URL)
   .then(response => {
     if (!response.ok) {
       throw new Error(`Erro na API: ${response.statusText}`);
     }
-    return response.json();
+    return response.json();  // Converte a resposta em formato JSON
   })
   .then(data => {
     const resultsDiv = document.getElementById('results');
@@ -16,10 +18,9 @@ fetch(API_URL)
       return;
     }
 
-    // Ordenando os resultados pela chave "Premio"
+    // Ordena os resultados pela chave "Premio"
     data.forEach(item => {
       item.Resultados.sort((a, b) => {
-        // Verifica se Premio é uma string válida antes de chamar replace
         const premioA = a.Premio ? parseInt(a.Premio.replace('°', '')) : 0;
         const premioB = b.Premio ? parseInt(b.Premio.replace('°', '')) : 0;
         return premioA - premioB;

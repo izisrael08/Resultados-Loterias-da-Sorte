@@ -1,37 +1,30 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+// Carrega as variáveis de ambiente do arquivo .env
+require('dotenv').config();
 
+// Importa as dependências necessárias
+const express = require('express');
+const axios = require('axios');
 const app = express();
 
-// Middleware para servir arquivos estáticos da pasta "public"
-app.use(express.static(path.join(__dirname, 'public')));
+// Pega a URL da API do arquivo .env
+const apiUrl = process.env.API_URL;
 
-// Configuração do CORS (se necessário)
-app.use(cors({
-  origin: '*', // Permite acessos de qualquer origem
-}));
+// Configura o servidor para servir arquivos estáticos (como o frontend)
+app.use(express.static('public'));
 
-// Endpoint para a API
-app.get('/results', (req, res) => {
-  res.json([
-    {
-      Titulo: "Resultado 1",
-      Hora: "10:00",
-      Resultados: [{ Resultado: "10" }, { Resultado: "20" }]
-    },
-    {
-      Titulo: "Resultado 2",
-      Hora: "12:00",
-      Resultados: [{ Resultado: "30" }, { Resultado: "40" }]
-    }
-  ]);
+// Endpoint para pegar os resultados da API
+app.get('/get-results', async (req, res) => {
+  try {
+    const response = await axios.get(apiUrl); // Faz a requisição para a API real
+    res.json(response.data);  // Retorna os dados da API para o frontend
+  } catch (error) {
+    console.error('Erro ao buscar resultados:', error);
+    res.status(500).send('Erro ao carregar resultados.');
+  }
 });
 
-// Porta do servidor
-const PORT = process.env.PORT || 3000;
-
-// Inicia o servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+// Define a porta do servidor
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
